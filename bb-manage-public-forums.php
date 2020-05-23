@@ -103,7 +103,7 @@ function bbmpf_subscribe_to_forum() {
 }
 
 function bbmpf_subscribe_to_forum_null() {
-  return null;
+  echo json_encode(['status' => false, 'message' => 'transaction not allowed']);
   exit;
 }
 
