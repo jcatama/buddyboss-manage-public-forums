@@ -1,0 +1,39 @@
+#forum-subscriptions-parent .forum-subscriptions {
+  color: #4D5C6D;
+}
+
+#forum-subscriptions-parent .forum-subscriptions .forum-subscriptions-list {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+#forum-subscriptions-parent .forum-subscriptions .forum-parent-card {
+  border-color: #E7E9EC;
+  background: #fff;
+  border: 1px solid #e7e9ec;
+  border-radius: 4px;
+  width: 32.33%;
+  padding: 10px;
+  margin: 3px;
+}
+
+#forum-subscriptions-parent .forum-subscriptions .forum-parent-card.fs-open {
+  height: auto !important;
+}
+
+#forum-subscriptions-parent .forum-subscriptions .sub-check {
+  display: none;
+}
+
+#forum-subscriptions-parent .forum-subscriptions label,
+#forum-subscriptions-parent .forum-subscriptions input,
+#forum-subscriptions-parent .forum-parent-card {
+  cursor: pointer;
+}
+
+#forum-subscriptions-parent .forum-subscriptions .fs-collapse {
+  display: none;
+}
