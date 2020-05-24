@@ -111,7 +111,7 @@ function bbmpf_subscribe_to_forum_null() {
 * Misc functions
 */
 
-function get_forum_query($id) {
+function bbmpf_get_forum_query($id) {
   return get_pages(
     [
       'post_type' => bbp_get_forum_post_type(),
@@ -122,7 +122,7 @@ function get_forum_query($id) {
   );
 }
 
-function check_if_subs($subs_forum, $forum_id) {
+function bbmpf_check_if_subs($subs_forum, $forum_id) {
   if(in_array($forum_id, $subs_forum)) {
     return 'checked';
   }
