@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="sub-check" data-parent="'.$forum->ID.'">
-            <?php $public_forums_child = get_forum_query($forum->ID) ?>
+            <?php $public_forums_child = bbmpf_get_forum_query($forum->ID) ?>
             <?php foreach($public_forums_child as $subforum): ?>
               &nbsp;&nbsp;&nbsp;
               <input type="checkbox" id="<?=$subforum->ID?>" <?=bbmpf_check_if_subs($subs_forums_arr, $subforum->ID)?>>
