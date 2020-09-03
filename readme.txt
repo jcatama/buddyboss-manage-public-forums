@@ -3,7 +3,7 @@ Contributors: jcatama
 Donate link: https://www.paypal.me/jcatama
 Tags: buddyboss, buddypress, bbp, forums, manage-forums
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 5.5
 Stable tag: 1.0
 Requires PHP: 7.0 or later
 License: GPLv2 or later
@@ -32,6 +32,9 @@ Only Public Forum
 Yes, it is 100% free to use and distribute
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed: Retrict user subscription 
 
 = 1.0 =
 * Initial
