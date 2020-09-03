@@ -3,7 +3,7 @@
 Plugin Name: BuddyBoss manage public forums
 Plugin URI:  https://wordpress.org/plugins/buddyboss-manage-public-forums/
 Description: Allow users to manage public forums & sub-forums.
-Version:     1.0.0
+Version:     1.0.1
 Author:      John Albert Catama
 Author URI:  https://github.com/jcatama
 License:     GPL2
@@ -44,14 +44,16 @@ function bb_manage_public_forums_scripts_styles() {
 add_action( 'bp_setup_nav', 'bb_manage_public_forums_tab', 1000 );
 function bb_manage_public_forums_tab() {
   global $bp;
-  bp_core_new_nav_item(array( 
-    'name' => __( 'Manage Forums', 'bbmpf' ), 
-    'slug' => 'manage-forums', 
-    'position' => 100,
-    'screen_function' => 'bb_manage_public_forums',
-    'show_for_displayed_user' => true,
-    'item_css_id' => 'bb_manage_public_forums'
-  ));
+  if(bbp_get_displayed_user_id() == get_current_user_id()) {
+    bp_core_new_nav_item(array( 
+      'name' => __( 'Manage Forums', 'bbmpf' ), 
+      'slug' => 'manage-forums', 
+      'position' => 100,
+      'screen_function' => 'bb_manage_public_forums',
+      'show_for_displayed_user' => true,
+      'item_css_id' => 'bb_manage_public_forums'
+    ));
+  }
 }
 
 function bb_manage_public_forums () {
@@ -71,6 +73,7 @@ function bb_manage_public_forums_content() {
 /*
 * AJAX core
 */
+
 add_action('wp_enqueue_scripts' , function(){
   wp_localize_script('jquery', 'bbmpfapi', array('ajaxurl' => admin_url('admin-ajax.php')));
 });
@@ -78,27 +81,33 @@ add_action('wp_enqueue_scripts' , function(){
 add_action('wp_ajax_bbmpf_subscribe_to_forum', 'bbmpf_subscribe_to_forum');
 add_action('wp_ajax_nopriv_bbmpf_subscribe_to_forum', 'bbmpf_subscribe_to_forum_null');
 function bbmpf_subscribe_to_forum() {
-  try {
-    $user_id = get_current_user_id();
-    $forum_ids = explode(',', $_POST['subs_forum_ids']);
-    foreach($forum_ids as $fid) {
-      if(is_numeric($fid)) {
-        bbp_add_user_forum_subscription($user_id, $fid);
+
+  if(bbp_get_displayed_user_id() == get_current_user_id()) {
+
+    try {
+      $user_id = get_current_user_id();
+      $forum_ids = explode(',', $_POST['subs_forum_ids']);
+      foreach($forum_ids as $fid) {
+        if(is_numeric($fid)) {
+          bbp_add_user_forum_subscription($user_id, $fid);
+        }
       }
-    }
-  
-    $unforum_ids = explode(',', $_POST['unsubs_forum_ids']);
-    foreach($unforum_ids as $fid) {
-      if(is_numeric($fid)) {
-        bbp_remove_user_forum_subscription($user_id, $fid);
+    
+      $unforum_ids = explode(',', $_POST['unsubs_forum_ids']);
+      foreach($unforum_ids as $fid) {
+        if(is_numeric($fid)) {
+          bbp_remove_user_forum_subscription($user_id, $fid);
+        }
       }
+    } catch(Exception $e) {
+      echo json_encode(['status' => false, 'message' => $e->getMessage()]);
+      exit;
     }
-  } catch(Exception $e) {
-    echo json_encode(['status' => false, 'message' => $e->getMessage()]);
-    exit;
+
+    echo json_encode(['status' => true]);
   }
 
-  echo json_encode(['status' => true]);
+  echo json_encode(['status' => false]);
   exit;
 }
 
